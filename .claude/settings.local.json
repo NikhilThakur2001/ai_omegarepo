@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(claude plugin *)",
+      "Bash(gh api *)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(pip show *)",
+      "Bash(pip install *)",
+      "Bash(SYMDEX_STATE_DIR=.symdex symdex index *)",
+      "Bash(lean-ctx --version)",
+      "Bash(lean-ctx --help)",
+      "Bash(lean-ctx)"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "lean-ctx"
+  ]
+}
