@@ -4,7 +4,7 @@
   "description": "Interactive Claude Code toolkit installer",
   "type": "module",
   "bin": {
-    "ai-omega": "./src/index.js"
+    "ai-omega": "src/index.js"
   },
   "engines": {
     "node": ">=18"
@@ -26,9 +26,15 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/NikhilThakur2001/ai_omegarepo"
+    "url": "git+https://github.com/NikhilThakur2001/ai_omegarepo.git"
   },
-  "keywords": ["claude", "claude-code", "ai", "mcp", "toolkit"],
+  "keywords": [
+    "claude",
+    "claude-code",
+    "ai",
+    "mcp",
+    "toolkit"
+  ],
   "files": [
     "src/"
   ],
