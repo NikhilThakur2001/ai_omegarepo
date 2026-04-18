@@ -28,8 +28,8 @@ export async function fetchManifest() {
     const manifest = await res.json();
     validateManifest(manifest);
     return { ...manifest, _usedFallback: false };
-  } catch {
-    const fallback = applyFallback();
-    return fallback;
+  } catch (err) {
+    console.warn(`[manifest] fetch failed (${err.message}), using bundled fallback`);
+    return applyFallback();
   }
 }
