@@ -6,6 +6,9 @@ const force = args.includes('--force');
 
 if (command === 'init') {
   runInit({ force }).catch(err => {
+    if (err.name === 'ExitPromptError') {
+      process.exit(0);
+    }
     console.error(err.message);
     process.exit(1);
   });

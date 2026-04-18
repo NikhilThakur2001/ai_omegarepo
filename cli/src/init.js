@@ -88,7 +88,7 @@ export async function runInit({ force = false } = {}) {
     for (const bin of missing) {
       console.log(`    • ${bin} — ${BINARY_INSTALL_HINTS[bin] ?? 'install manually'}`);
     }
-    console.log('\n  **It is strongly recommended to install all required tools before running ai-omega init.**');
+    console.log('\n  It is strongly recommended to install all required tools before running ai-omega init.');
     console.log('  Skipping components that depend on missing tools.\n');
   }
 
@@ -96,9 +96,10 @@ export async function runInit({ force = false } = {}) {
   const results = { ok: [], failed: [], skipped: [] };
 
   for (const c of selectedComponents) {
-    const requiresMissing = c.install_steps.some(
-      s => missing.includes(s.command.trim().split(/\s+/)[0])
-    );
+    const requiresMissing = c.install_steps.some(s => {
+      const first = s.command.trim().split(/\s+/)[0];
+      return BINARY_INSTALL_HINTS[first] && missing.includes(first);
+    });
     if (requiresMissing) {
       console.log(`  ${c.name.padEnd(24)} ⚠ skipped (missing dependency)`);
       results.skipped.push(c.id);
@@ -116,15 +117,27 @@ export async function runInit({ force = false } = {}) {
       continue;
     }
 
-    applyConfigPatch(process.cwd(), c.config_patch, force);
-    console.log('✓');
-    results.ok.push(c.id);
+    try {
+      applyConfigPatch(process.cwd(), c.config_patch, force);
+      console.log('✓');
+      results.ok.push(c.id);
+    } catch (err) {
+      console.log(`✗ config patch failed: ${err.message}`);
+      results.failed.push(c.id);
+    }
   }
 
-  console.log('\n  ✓ Done.');
-  if (results.failed.length) {
-    console.log(`  ${results.failed.length} failed: ${results.failed.join(', ')}`);
-    console.log('  Re-run ai-omega init to retry failed components.');
+  const allFailed = results.ok.length === 0 && results.failed.length > 0;
+  if (allFailed) {
+    console.log(`\n  ✗ All components failed.`);
+    console.log(`  Failed: ${results.failed.join(', ')}`);
+    console.log('  Re-run ai-omega init to retry.');
+  } else {
+    console.log('\n  ✓ Done.');
+    if (results.failed.length) {
+      console.log(`  ${results.failed.length} failed: ${results.failed.join(', ')}`);
+      console.log('  Re-run ai-omega init to retry failed components.');
+    }
+    console.log('  Restart Claude Code to activate.\n');
   }
-  console.log('  Restart Claude Code to activate.\n');
 }
