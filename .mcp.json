@@ -1,11 +1,5 @@
 {
   "mcpServers": {
-    "lean-ctx": {
-      "type": "stdio",
-      "command": "lean-ctx",
-      "args": [],
-      "env": {}
-    },
     "symdex": {
       "type": "stdio",
       "command": "uvx",

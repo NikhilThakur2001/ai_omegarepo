@@ -10,7 +10,7 @@ Include the best skills and aim at making the development process on a project a
 
 | Server | Purpose |
 |--------|---------|
-| **lean-ctx** | Lightweight context server — provides minimal/lean context to Claude for token efficiency |
+| **symdex** | Codebase indexer — symbol search, call graphs, routes. 7500→200 tokens per lookup |
 
 ### Plugin-injected MCPs
 
