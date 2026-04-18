@@ -20,8 +20,15 @@
     "test": "node --experimental-vm-modules node_modules/.bin/jest --testPathPattern=tests/"
   },
   "jest": {
-    "transform": {}
+    "transform": {},
+    "testEnvironment": "node"
   },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NikhilThakur2001/ai_omegarepo"
+  },
+  "keywords": ["claude", "claude-code", "ai", "mcp", "toolkit"],
   "files": [
     "src/"
   ]

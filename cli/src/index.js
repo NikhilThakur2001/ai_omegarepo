@@ -10,6 +10,6 @@ if (command === 'init') {
     process.exit(1);
   });
 } else {
-  console.log('Usage: ai-omega init [--force]');
+  console.error('Usage: ai-omega init [--force]');
   process.exit(1);
 }
