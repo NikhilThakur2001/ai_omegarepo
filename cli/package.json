@@ -1,0 +1,38 @@
+{
+  "name": "ai-omega",
+  "version": "0.1.0",
+  "description": "Interactive Claude Code toolkit installer",
+  "type": "module",
+  "bin": {
+    "ai-omega": "./src/index.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@inquirer/checkbox": "^3.0.0",
+    "@inquirer/input": "^4.0.0"
+  },
+  "devDependencies": {
+    "jest": "^29.0.0"
+  },
+  "scripts": {
+    "test": "node --experimental-vm-modules node_modules/.bin/jest --testPathPattern=tests/"
+  },
+  "jest": {
+    "transform": {},
+    "testEnvironment": "node"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NikhilThakur2001/ai_omegarepo"
+  },
+  "keywords": ["claude", "claude-code", "ai", "mcp", "toolkit"],
+  "files": [
+    "src/"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -1,0 +1,118 @@
+{
+  "version": "1",
+  "_bundled": true,
+  "_bundled_version": "0.1.0",
+  "components": [
+    {
+      "id": "symdex",
+      "name": "Symdex MCP",
+      "description": "Codebase indexer. Symbol search, call graphs, routes. 7500→200 tokens per lookup.",
+      "category": "mcp",
+      "recommended": true,
+      "install_steps": [
+        { "type": "shell", "command": "pip install \"symdex[local]\"" },
+        { "type": "shell", "command": "symdex index . --repo {project_name}" }
+      ],
+      "config_patch": {
+        "mcp": {
+          "symdex": {
+            "type": "stdio",
+            "command": "uvx",
+            "args": ["symdex", "serve"],
+            "env": { "SYMDEX_STATE_DIR": ".symdex" }
+          }
+        }
+      }
+    },
+    {
+      "id": "superpowers",
+      "name": "Superpowers",
+      "description": "TDD, debugging, brainstorming, code review, plan writing/execution skills.",
+      "category": "plugin",
+      "recommended": true,
+      "install_steps": [
+        { "type": "shell", "command": "claude plugin install superpowers@claude-plugins-official" }
+      ],
+      "config_patch": {
+        "settings": {
+          "enabledPlugins": { "superpowers@claude-plugins-official": true }
+        }
+      }
+    },
+    {
+      "id": "claude-mem",
+      "name": "claude-mem",
+      "description": "Persistent memory across Claude sessions.",
+      "category": "plugin",
+      "recommended": true,
+      "install_steps": [
+        { "type": "shell", "command": "claude plugin install claude-mem@thedotmack" }
+      ],
+      "config_patch": {
+        "settings": {
+          "enabledPlugins": { "claude-mem@thedotmack": true }
+        }
+      }
+    },
+    {
+      "id": "caveman",
+      "name": "caveman",
+      "description": "Ultra-compressed communication mode. ~75% token reduction.",
+      "category": "plugin",
+      "recommended": true,
+      "install_steps": [
+        { "type": "shell", "command": "claude plugin install caveman@caveman" }
+      ],
+      "config_patch": {
+        "settings": {
+          "enabledPlugins": { "caveman@caveman": true },
+          "extraKnownMarketplaces": {
+            "caveman": {
+              "source": { "source": "github", "repo": "JuliusBrussee/caveman" }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "ui-ux-pro-max",
+      "name": "ui-ux-pro-max",
+      "description": "UI/UX design intelligence — 67 styles, 161 palettes, component design.",
+      "category": "plugin",
+      "recommended": false,
+      "install_steps": [
+        { "type": "shell", "command": "claude plugin install ui-ux-pro-max@ui-ux-pro-max-skill" }
+      ],
+      "config_patch": {
+        "settings": {
+          "enabledPlugins": { "ui-ux-pro-max@ui-ux-pro-max-skill": true }
+        }
+      }
+    },
+    {
+      "id": "graphify",
+      "name": "graphify hook",
+      "description": "Knowledge graph checks before file searches.",
+      "category": "hook",
+      "recommended": false,
+      "install_steps": [],
+      "config_patch": {
+        "settings": {
+          "hooks": {
+            "PreToolUse": [
+              {
+                "matcher": "Glob|Grep",
+                "hooks": [
+                  {
+                    "type": "command",
+                    "command": "[ -f graphify-out/graph.json ] && echo '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"additionalContext\":\"graphify: Knowledge graph exists. Read graphify-out/GRAPH_REPORT.md before searching raw files.\"}}' || true"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}
