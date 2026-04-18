@@ -31,5 +31,8 @@
   "keywords": ["claude", "claude-code", "ai", "mcp", "toolkit"],
   "files": [
     "src/"
-  ]
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
 }
