@@ -1,7 +1,5 @@
 {
   "version": "1",
-  "_bundled": true,
-  "_bundled_version": "0.1.0",
   "components": [
     {
       "id": "symdex",
