@@ -39,3 +39,19 @@ test('mergeSettings skips existing plugin key when force=false', () => {
   expect(result.enabledPlugins['superpowers@claude-plugins-official']).toBe(true);
   expect(result.skipped).toContain('superpowers@claude-plugins-official');
 });
+
+test('mergeSettings merges hooks.PreToolUse array additively', () => {
+  const existing = { hooks: { PreToolUse: [{ matcher: 'Bash', hooks: [] }] } };
+  const patch = { hooks: { PreToolUse: [{ matcher: 'Glob|Grep', hooks: [] }] } };
+  const result = mergeSettings(existing, patch, false);
+  expect(result.hooks.PreToolUse).toHaveLength(2);
+  expect(result.skipped).toEqual([]);
+});
+
+test('mergeSettings skips duplicate hook matcher when force=false', () => {
+  const existing = { hooks: { PreToolUse: [{ matcher: 'Glob|Grep', hooks: [] }] } };
+  const patch = { hooks: { PreToolUse: [{ matcher: 'Glob|Grep', hooks: [] }] } };
+  const result = mergeSettings(existing, patch, false);
+  expect(result.hooks.PreToolUse).toHaveLength(1);
+  expect(result.skipped).toContain('hook:PreToolUse:Glob|Grep');
+});
