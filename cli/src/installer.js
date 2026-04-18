@@ -12,8 +12,10 @@ export function substituteTemplates(command, projectName) {
 }
 
 export async function checkBinary(name) {
-  const result = spawnSync(process.platform === 'win32' ? 'where' : 'which', [name], {
+  const isWin = process.platform === 'win32';
+  const result = spawnSync(isWin ? 'where' : 'which', [name], {
     stdio: 'pipe',
+    shell: isWin,
   });
   return result.status === 0;
 }
@@ -36,7 +38,7 @@ export async function getRequiredBinaries(components) {
   const needed = new Set();
   for (const c of components) {
     for (const step of c.install_steps) {
-      const first = step.command.split(' ')[0];
+      const first = step.command.trim().split(/\s+/)[0];
       if (BINARY_INSTALL_HINTS[first]) needed.add(first);
     }
   }

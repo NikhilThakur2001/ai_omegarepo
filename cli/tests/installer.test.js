@@ -25,3 +25,12 @@ test('BINARY_INSTALL_HINTS contains claude, pip, uvx', () => {
   expect(BINARY_INSTALL_HINTS).toHaveProperty('pip');
   expect(BINARY_INSTALL_HINTS).toHaveProperty('uvx');
 });
+
+test('substituteTemplates replaces all occurrences of {project_name}', () => {
+  const cmd = 'init {project_name} --alias {project_name}';
+  expect(substituteTemplates(cmd, 'myapp')).toBe('init myapp --alias myapp');
+});
+
+test('BINARY_INSTALL_HINTS contains uv', () => {
+  expect(BINARY_INSTALL_HINTS).toHaveProperty('uv');
+});
